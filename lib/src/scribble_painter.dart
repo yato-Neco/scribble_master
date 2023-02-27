@@ -33,6 +33,7 @@ class ScribblePainter extends CustomPainter {
         points,
         size: line.width * 2 * state.scaleFactor,
         simulatePressure: simulatePressure,
+        thinning: 0.0,
       );
       final path = Path();
       if (outlinePoints.isEmpty) {
