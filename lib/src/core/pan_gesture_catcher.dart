@@ -16,15 +16,21 @@ class GestureCatcher extends StatelessWidget {
     return RawGestureDetector(
       key: ValueKey(pointerKindsToCatch),
       gestures: {
-        GestureCatcherRecognizer:
-            GestureRecognizerFactoryWithHandlers<GestureCatcherRecognizer>(
-          () => GestureCatcherRecognizer(
-            debugOwner: this,
-            pointerKindsToCatch: pointerKindsToCatch,
-          ),
-          (GestureCatcherRecognizer instance) {
+        GestureCatcherRecognizer: GestureRecognizerFactoryWithHandlers<
+            GestureCatcherRecognizer>(
+              () =>
+              GestureCatcherRecognizer(
+                debugOwner: this,
+                pointerKindsToCatch: pointerKindsToCatch,
+              ),
+              (GestureCatcherRecognizer instance) {
+            instance
+              ..onUpdate = (ScaleUpdateDetails data) {
+                print(data.scale);
+            };
           },
-        )
+        ),
+
       },
       child: child,
     );
@@ -41,7 +47,7 @@ class GestureCatcher extends StatelessWidget {
 ///  * [DelayedMultiDragGestureRecognizer], for a similar recognizer that
 ///    tracks each touch point independently, but that doesn't start until
 ///    some time has passed.
-class GestureCatcherRecognizer extends OneSequenceGestureRecognizer {
+class GestureCatcherRecognizer extends ScaleGestureRecognizer {
   /// Create a gesture recognizer for tracking movement on a plane.
   GestureCatcherRecognizer({
     required Set<PointerDeviceKind> pointerKindsToCatch,
